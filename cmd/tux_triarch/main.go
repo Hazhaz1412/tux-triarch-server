@@ -17,6 +17,12 @@ var (
 	ORION_URL = os.Getenv("ORION_URL")
 )
 
+func init() {
+	if ORION_URL == "" {
+		ORION_URL = "http://localhost:1026"
+	}
+}
+
 func main() {
 	app := pocketbase.New()
 
@@ -49,9 +55,6 @@ func main() {
 			}
 
 			for k, vals := range re.Request.Header {
-				if k == "Authorization" {
-					continue
-				}
 				for _, v := range vals {
 					req.Header.Add(k, v)
 				}
